@@ -35,7 +35,9 @@ static int read_data(float *A0, int nx,int ny,int nz,FILE *fp)
 int main(int argc, char** argv) {
 	struct pb_TimerSet timers;
 	struct pb_Parameters *parameters;
-	
+	clock_t start,finish;
+        double totaltime;
+	start = clock();
 
 	
 	printf("CUDA accelerated 7 points stencil codes****\n");
@@ -165,7 +167,9 @@ cudaDeviceSynchronize();
 
 	pb_PrintTimerSet(&timers);
 	pb_FreeParameters(parameters);
-
+        finish = clock();
+        totaltime = (double)(finish-start)/CLOCKS_PER_SEC;
+        printf("Total time: %f\n",totaltime);
 	return 0;
 
 }

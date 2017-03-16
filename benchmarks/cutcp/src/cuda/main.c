@@ -14,7 +14,7 @@
 #include "atom.h"
 #include "cutoff.h"
 #include "output.h"
-
+#include <time.h>
 #define ERRTOL 1e-4f
 
 #define NOKERNELS             0
@@ -102,7 +102,9 @@ int main(int argc, char *argv[]) {
 
   struct pb_Parameters *parameters;
   struct pb_TimerSet timers;
-
+  clock_t start,finish;
+  double totaltime;
+  start = clock();
   /* Read input parameters */
   parameters = pb_ReadParameters(&argc, argv);
   if (parameters == NULL) {
@@ -177,6 +179,8 @@ int main(int argc, char *argv[]) {
   pb_SwitchToTimer(&timers, pb_TimerID_NONE);
   pb_PrintTimerSet(&timers);
   pb_FreeParameters(parameters);
-
+  finish = clock();
+  totaltime= (double)(finish-start)/CLOCKS_PER_SEC;
+  printf("Totaltime: %f\n",totaltime);
   return 0;
 }
